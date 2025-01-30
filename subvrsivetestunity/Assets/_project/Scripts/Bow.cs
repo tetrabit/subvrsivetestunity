@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-public class Bow : BaseRangedWeapon
+﻿public class Bow : BaseRangedWeapon
 {
     public Bow()
     {
