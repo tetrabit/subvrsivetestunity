@@ -21,4 +21,32 @@ public class BaseCharacter : MonoBehaviour, IUnit
     {
         
     }
+
+    public class CharacterState
+    {
+        public StateMachine stateMachine;
+        public IdleState IdleState = new IdleState();
+        public MoveState MoveState = new MoveState();
+        public AttackState AttackState = new AttackState();
+        public TargetState TargetState = new TargetState();
+        public DeadState DeadState = new DeadState();
+    }
+}
+
+public class Archer : BaseCharacter
+{
+    StateMachine stateMachine;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    void Init()
+    {
+        Health = 5;
+        MoveSpeed = 5;
+        RotateSpeed = 5;
+        Weapon = new Bow();
+    }
 }
