@@ -110,6 +110,7 @@ public class BattleSimManager : MonoBehaviourSingleton<BattleSimManager>
             _units[0].Health = 9999f;
             _units[0].IsAlive = true;
             Debug.Log($"the winner is {_units[0].Name}");
+            WinnerText.Events.RaiseWinner(_units[0].Name);
         }
     }
     
