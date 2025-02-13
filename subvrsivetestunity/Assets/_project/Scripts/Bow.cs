@@ -14,8 +14,8 @@
 
     public void Init()
     {
-        Range = 10;
-        AttackSpeed = 10;
+        Range = 5;
+        AttackSpeed = 2;
         AmmoType = new Arrow();
     }
 }

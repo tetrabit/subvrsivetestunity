@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour, IUnit
@@ -6,47 +7,74 @@ public class BaseCharacter : MonoBehaviour, IUnit
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     public float RotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
     public IWeapon Weapon { get => _weapon; set => _weapon = value; }
+    public UnitStateMachine State { get => _stateMachine; set => _stateMachine = value; }
+    public BaseCharacter Target { get => _target; set => _target = value; }
+    public bool IsAlive { get => _isAlive; set => _isAlive = value; }
+    public string Name { get => _name; set => _name = value; }
 
     private float _health = 10;
     private float _moveSpeed = 10;
     private float _rotateSpeed = 10;
     private IWeapon _weapon;
+    private BaseCharacter _target;
+    private bool _isAlive = true;
+    private string _name;
 
-    void Start()
+    private UnitStateMachine _stateMachine;
+    public IdleState IdleState;
+    public MoveState MoveState;
+    public AttackState AttackState;
+    public TargetState TargetState;
+    public DeadState DeadState;
+
+    public virtual void Init()
     {
-        
+        _name = NamesQueue.Names.Dequeue();
+        StateMachineInit();
     }
 
-    void Update()
+    public void StateMachineInit()
     {
-        
+        _stateMachine= new UnitStateMachine();
+        IdleState = new IdleState(this, _stateMachine);
+        MoveState = new MoveState(this, _stateMachine);
+        AttackState = new AttackState(this, _stateMachine);
+        TargetState = new TargetState(this, _stateMachine);
+        DeadState = new DeadState(this, _stateMachine);
     }
 
-    public class CharacterState
+    public void TakeDamage(float damage)
     {
-        public StateMachine stateMachine;
-        public IdleState IdleState = new IdleState();
-        public MoveState MoveState = new MoveState();
-        public AttackState AttackState = new AttackState();
-        public TargetState TargetState = new TargetState();
-        public DeadState DeadState = new DeadState();
+        _health -= damage;
+        if(_health <= 0 ) 
+        {
+            IsAlive = false;
+            BattleSimManager.Events.RaiseCharacterDied(this);
+        }
     }
-}
-
-public class Archer : BaseCharacter
-{
-    StateMachine stateMachine;
 
     private void Awake()
     {
-        Init();
+
     }
 
-    void Init()
+    private void Start()
     {
-        Health = 5;
-        MoveSpeed = 5;
-        RotateSpeed = 5;
-        Weapon = new Bow();
+    
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    public static class Events
+    {
+        public static event Action<BaseCharacter, float> UnitHit;
+
+        public static void RaiseUnitHit(BaseCharacter unit, float damage)
+        {
+            UnitHit?.Invoke(unit, damage);
+        }
     }
 }

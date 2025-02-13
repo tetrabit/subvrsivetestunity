@@ -5,15 +5,17 @@
         Init();
     }
 
-    public Arrow(float damage, float speed)
+    public Arrow(float damage, float speed, float timeToLive)
     {
         Damage = damage;
         Speed = speed;
+        TimeToLive = timeToLive;
     }
 
     public void Init()
     {
-        Damage = 10;
+        Damage = 4;
         Speed = 10;
+        TimeToLive = 10;
     }
 }
