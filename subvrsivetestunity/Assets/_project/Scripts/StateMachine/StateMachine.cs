@@ -1,12 +1,3 @@
-using Unity.VisualScripting;
-
-public interface IState
-{
-    public void Enter();
-    public void Update();
-    public void Exit();
-}
-
 public class StateMachine
 {
     public IState CurrentState => _currentState;
@@ -34,3 +25,10 @@ public class StateMachine
     }
 }
 
+public class UnitStateMachine : StateMachine
+{
+    public UnitStateMachine()
+    {
+        
+    }
+}

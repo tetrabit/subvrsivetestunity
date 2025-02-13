@@ -1,18 +1,45 @@
-﻿public class AttackState : IState
+﻿using UnityEngine;
+
+public class AttackState : UnitState
 {
-    public void Enter()
+    public AttackState(BaseCharacter baseCharacter, UnitStateMachine unitStateMachine) : base(baseCharacter, unitStateMachine)
     {
-        throw new System.NotImplementedException();
+        _character = baseCharacter;
+        _stateMachine = unitStateMachine;
     }
 
-    public void Exit()
+    public override void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{_character.name} has entered the {this.GetType().Name} state.");
+
     }
 
-    public void Update()
+    public override void Update()
     {
-        throw new System.NotImplementedException();
+        if(_character.Target == null || !_character.Target.IsAlive)
+        {
+            _character.State.ChangeState(_character.TargetState);
+            return;
+        }
+
+        var direction = _character.Target.transform.position - _character.transform.position;
+        var distance = Vector3.Distance(_character.transform.position, _character.Target.transform.position);
+
+        var rangedWeapon = _character.Weapon as IRangedWeapon;
+        var effectiveRange = (rangedWeapon is not null)
+            ? rangedWeapon.Range
+            : ProjectConstants.MELEE_RANGE;
+
+        if(UnitUtilities.IsOnTarget(_character))
+        {
+            if (rangedWeapon is not null)
+            {
+                rangedWeapon.Fire();
+            }
+        }
+        else
+        {
+            _character.State.ChangeState(_character.MoveState);
+        }
     }
 }
-

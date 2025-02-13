@@ -1,18 +1,24 @@
-﻿public class IdleState : IState
+﻿using UnityEngine;
+
+public class IdleState : UnitState
 {
-    public void Enter()
+    public IdleState(BaseCharacter baseCharacter, UnitStateMachine unitStateMachine) : base(baseCharacter, unitStateMachine)
     {
-        throw new System.NotImplementedException();
+        _character = baseCharacter;
+        _stateMachine = unitStateMachine;
     }
 
-    public void Exit()
+    public override void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{_character.name} has entered the {this.GetType().Name} state.");
     }
 
-    public void Update()
+    public override void Update()
     {
-        throw new System.NotImplementedException();
+    }
+
+    public override void Exit()
+    {
     }
 }
 

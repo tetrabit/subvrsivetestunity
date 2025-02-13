@@ -1,18 +1,29 @@
-﻿public class DeadState : IState
+﻿using UnityEngine;
+
+public class DeadState : UnitState
 {
-    public void Enter()
+    public DeadState(BaseCharacter baseCharacter, UnitStateMachine unitStateMachine) : base(baseCharacter, unitStateMachine)
     {
-        throw new System.NotImplementedException();
     }
 
-    public void Exit()
+    public override void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{_character.name} has entered the {this.GetType().Name} state.");
+        if (_character.Health <= 0)
+        {
+            _character.IsAlive = false;
+            _character.transform.localScale = Vector3.zero;
+        }
+
     }
 
-    public void Update()
+    public override void Update()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public override void Exit()
+    {
     }
 }
 
