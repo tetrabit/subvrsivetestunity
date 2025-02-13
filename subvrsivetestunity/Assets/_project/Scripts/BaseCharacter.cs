@@ -14,7 +14,7 @@ public class BaseCharacter : MonoBehaviour, IUnit
 
     private float _health = 10;
     private float _moveSpeed = 10;
-    private float _rotateSpeed = 10;
+    private float _rotateSpeed = 20;
     private IWeapon _weapon;
     private BaseCharacter _target;
     private bool _isAlive = true;

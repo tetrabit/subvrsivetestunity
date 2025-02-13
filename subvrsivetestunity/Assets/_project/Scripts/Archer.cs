@@ -10,7 +10,7 @@ public class Archer : BaseCharacter
         base.Init();
         Health = 5;
         MoveSpeed = 5;
-        RotateSpeed = 5;
+        RotateSpeed = 20;
         Weapon = _weaponPrefab.GetComponent<BaseWeapon>();
     }
 }

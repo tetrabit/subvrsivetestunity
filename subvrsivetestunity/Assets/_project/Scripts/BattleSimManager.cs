@@ -22,8 +22,8 @@ public class BattleSimManager : MonoBehaviourSingleton<BattleSimManager>
     {
         for (int i = 0; i < _numUnits; i++)
         {
-            var spawnPos = new Vector3(RandomUtil.Instance.Next(-100, 100), 0f, 
-                RandomUtil.Instance.Next(-100, 100));
+            var spawnPos = new Vector3(RandomUtil.Instance.Next(-50, 50), 0f, 
+                RandomUtil.Instance.Next(-50, 50));
 
             var UnitObject = Instantiate(_unitPrefab, spawnPos, Quaternion.identity);
 
